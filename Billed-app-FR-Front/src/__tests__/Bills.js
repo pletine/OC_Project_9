@@ -75,11 +75,11 @@ describe("Given I am connected as an employee", () => {
       await waitFor(() => screen.queryAllByTestId('icon-eye'))
       const IconEye = screen.getAllByTestId("icon-eye")[1];
       $.fn.modal = jest.fn(() => modaleFile.classList.add("show"))
-      const handleClick = jest.fn(IconEye.handleClick)
-      IconEye.addEventListener('click', handleClick)
+      const test = document.getElementById('modaleFile')
       userEvent.click(IconEye)
-
-      expect(handleClick).toHaveBeenCalled()
+      
+      const modalShow = await test.classList.contains('show')
+      expect(modalShow).toBeTruthy()
     })
 
     test("Then I Click on newBill button, Then the form for new bill should appear", async () => {
@@ -95,11 +95,10 @@ describe("Given I am connected as an employee", () => {
 
       await waitFor(() => screen.queryAllByTestId('btn-new-bill'))
       const NewBillButton = screen.getAllByTestId("btn-new-bill")[0];
-      const handleClick = jest.fn(NewBillButton.handleClick)
-      NewBillButton.addEventListener('click', handleClick)
       userEvent.click(NewBillButton)
 
-      expect(handleClick).toHaveBeenCalled()
+      const message = await screen.getByText(/Envoyer une note de frais/)
+      expect(message).toBeTruthy()
     })
   })
 
